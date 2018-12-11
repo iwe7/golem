@@ -1381,7 +1381,6 @@ class DoWorkService(LoopingCallService):
     def __init__(self, client: Client):
         super().__init__(interval_seconds=1)
         self._client = client
-        self._check_ts = {}
 
     def start(self):
         super().start(now=False)
@@ -1409,13 +1408,6 @@ class DoWorkService(LoopingCallService):
             self._client.ranking.sync_network()
         except Exception:
             logger.exception("ranking.sync_network failed")
-
-    def _time_for(self, key: Hashable, interval_seconds: float):
-        now = time.time()
-        if now >= self._check_ts.get(key, 0):
-            self._check_ts[key] = now + interval_seconds
-            return True
-        return False
 
 
 class MonitoringPublisherService(LoopingCallService):
