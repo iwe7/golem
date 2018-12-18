@@ -216,6 +216,7 @@ def _ensure_task_deposit(client, task, force):
             expected=opt_amount,
             force=force,
         )
+        client.transaction_system.concent_relock()
     except eth_exceptions.EthereumError:
         client.funds_locker.remove_task(task_id)
         raise

@@ -314,6 +314,7 @@ class TestEnqueueNewTask(ProviderBase):
             expected=mock.ANY,
             force=force,
         )
+        self.client.transaction_system.concent_relock.assert_called()
 
     @mock.patch('golem.task.rpc.logger.error')
     @mock.patch('golem.task.rpc._ensure_task_deposit')
